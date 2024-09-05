@@ -1,6 +1,6 @@
 # Tiny Tapeout project information
 project:
-  title:        "DPMU"      # Project title
+  title:        "DPM_Unit"      # Project title
   author:       "Sanjay Kumar M, Shylashree N, Ravish Aradhya H V, RV College Of Engineering, Neha R V, PES Unoversity"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Design and Implementation of Dynamic Power management unit"      # One line description of what your project does
