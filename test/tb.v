@@ -17,14 +17,16 @@ module tb ();
   reg clk;
   reg rst_n;
   reg ena;
-  reg [7:0] ui_in;
-  reg [7:0] uio_in;
+  wire [7:0] ui_in;
+  wire [7:0] uio_in;
+  reg [7:0] ui_in_reg;
+  reg [7:0] uio_in_reg;
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
   // Replace tt_um_example with your module name:
-  tt_um_example user_project (
+  tt_um_dpmu user_project (
 
       // Include power ports for the Gate Level test:
 `ifdef GL_TEST
@@ -41,5 +43,45 @@ module tb ();
       .clk    (clk),      // clock
       .rst_n  (rst_n)     // not reset
   );
+
+  // Assign values to the wire type inout signals
+  assign ui_in = ui_in_reg;
+  assign uio_in = uio_in_reg;
+
+  initial begin
+    clk = 0;
+    forever #5 clk = ~clk;  
+  end
+
+  initial begin
+    rst_n = 0;  
+    ui_in_reg = 8'b11110010;
+    #10;
+    rst_n = 1;  
+    #10;
+    ui_in_reg = 8'b00010010; // 
+    #20; 
+    ui_in_reg = 8'b11110010; // 
+    #20; 
+    ui_in_reg = 8'b11110011; // 
+    #20;
+    ui_in_reg = 8'b11110010; // 
+    #20;
+    ui_in_reg = 8'b11101010; // 
+    #20;
+    ui_in_reg = 8'b11111010; // 
+    #20;
+    ui_in_reg = 8'b11111110; // 
+    #20;
+    ui_in_reg = 8'b11111010; // 
+
+    #20;
+    #10;
+    $stop;
+  end
+
+  initial begin
+    $monitor("Time=%0d | ui_in=%b, uio_out=%b | uo_out=%b", $time, ui_in, uio_out, uo_out);
+  end
 
 endmodule
